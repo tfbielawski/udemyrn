@@ -24,11 +24,12 @@ function GoalInput(props) {
         // () will execute the function immediately, without waiting for the event
         // No parenthesis will pass the function as a reference, to be executed when text changes
         onChangeText={goalInputHandler} //Connects this to the function
+        value={enteredGoalText}
       />
       <Button title="ADD Goal" onPress={addGoalHandler} />
     </View>
   );
-} 
+}
 
 export default GoalInput;
 
