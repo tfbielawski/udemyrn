@@ -60,10 +60,8 @@ const styles = StyleSheet.create({
     // flexDirection: "column", //default, not needed
     justifyContent: "center",
     alignItems: "center", //Aligns text on the button
-    marginBottom: 24,
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
+    backgroundColor: "#311b6b",
   },
   image: {
     width: 100,
