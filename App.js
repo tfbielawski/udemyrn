@@ -2,6 +2,7 @@ import { useState } from "react";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 import { StyleSheet, View, FlatList, Button } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   //State to hold the modal visibility
@@ -44,42 +45,43 @@ export default function App() {
   }
 
   return (
-    <View style={styles.appContainer}>
-      {/* Styles are JS Objects. Preferrable to use a style component */}
-      <Button
-        title="Add New Goal"
-        color="darkslateblue"
-        onPress={startAddGoalHandler}
-      />
-      {modalIsVisible && <GoalInput
-        visble={modalIsVisible}
-        onAddGoal={addGoalHandler}
-        onCancel={endAddGoalHandler}
-      />}
-      {/* <GoalInput
+    <>
+    <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        {/* Styles are JS Objects. Preferrable to use a style component */}
+        <Button title="Add New Goal" onPress={startAddGoalHandler} />
+        {modalIsVisible && (
+          <GoalInput
+            visble={modalIsVisible}
+            onAddGoal={addGoalHandler}
+            onCancel={endAddGoalHandler}
+          />
+        )}
+        {/* <GoalInput
         visble={modalIsVisible}
         onAddGoal={addGoalHandler}
         onCancel={endAddGoalHandler}
       /> */}
 
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                text={itemData.item.text}
-                id={itemData.item.id}
-                onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
-          //Takes a function (gets item and index from Flatlist), returns a unique key
-          keyExtractor={(item, index) => item.id}
-          alwaysBounceVertical={true}
-        />
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  text={itemData.item.text}
+                  id={itemData.item.id}
+                  onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+            //Takes a function (gets item and index from Flatlist), returns a unique key
+            keyExtractor={(item, index) => item.id}
+            alwaysBounceVertical={true}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
     flex: 1, //takes the height of outer container
     padding: 50,
     paddingHorizontal: 16, //Left and right padding
+    backgroundColor: "#6e46d2",
   },
 
   goalsContainer: {
