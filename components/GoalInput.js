@@ -1,5 +1,13 @@
-import { StyleSheet, View, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Modal,
+  Button,
+  Image,
+} from "react-native";
 import { useState } from "react";
+import { endAsyncEvent } from "react-native/Libraries/Performance/Systrace";
 
 function GoalInput(props) {
   //useState returns an array with 2 elements
@@ -17,17 +25,30 @@ function GoalInput(props) {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Course Goal"
-        // () will execute the function immediately, without waiting for the event
-        // No parenthesis will pass the function as a reference, to be executed when text changes
-        onChangeText={goalInputHandler} //Connects this to the function
-        value={enteredGoalText}
-      />
-      <Button title="ADD Goal" onPress={addGoalHandler} />
-    </View>
+    <Modal visible={props.visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/goal.png")}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Course Goal"
+          // () will execute the function immediately, without waiting for the event
+          // No parenthesis will pass the function as a reference, to be executed when text changes
+          onChangeText={goalInputHandler} //Connects this to the function
+          value={enteredGoalText}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="ADD GOAL" onPress={addGoalHandler} />
+          </View>
+          <View style={styles.button}>
+            <Button title="CANCEL" onPress={props.onCancel} />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -35,19 +56,32 @@ export default GoalInput;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    flex: 1, //takes 1/6 of the space of inner container
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flex: 1, //takes all available space in modal
+    // flexDirection: "column", //default, not needed
+    justifyContent: "center",
     alignItems: "center", //Aligns text on the button
     marginBottom: 24,
+    padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 20,
   },
   textInput: {
     borderWidth: 1,
     borderColor: "#cccccc",
-    width: "70%",
-    marginRight: 8,
+    width: "100%",
     padding: 8,
+  },
+  buttonContainer: {
+    marginTop: 16,
+    flexDirection: "row",
+  },
+  button: {
+    width: "30%",
+    marginHorizontal: 8,
   },
 });
